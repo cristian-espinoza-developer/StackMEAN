@@ -8,9 +8,7 @@
 | **ASIGNATURA** | Patrones de Diseño de APIs |
 | **NRO. PRÁCTICA** | 03 |
 | **TÍTULO PRÁCTICA** | Stack MEAN |
-| **ÁREA** | Computación |
-| **DOCENTE** | Ing. Jennifer Yépez A., MSc. |
-| **PERÍODO LECTIVO** | Septiembre 2026 – Febrero 2026 |
+| **DOCENTE** | Ing. Patsy Prieto V., MSc. |
 
 ---
 
@@ -49,12 +47,6 @@ El sistema debe operar bajo cinco operaciones fundamentales, expuestas mediante 
 - TypeScript (v5+ o superior)
 - MongoDB Server / MongoDB Atlas & MongoDB Compass
 - Cliente REST (Insomnia, Postman o REST Client para VS Code)
-
----
-
-## Código Inicial
-
-_(sin contenido en el documento original)_
 
 ---
 

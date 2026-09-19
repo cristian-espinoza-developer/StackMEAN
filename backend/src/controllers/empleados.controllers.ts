@@ -1,26 +1,25 @@
-const empleadoController:any={};
+import type { Request, Response } from 'express';
+import Empleado from '../models/empleado.js';
 
-const Empleado=require('../models/empleado');
-
-empleadoController.getEmpleado=async(req,res)=>{
-    const empleados=await Empleado.find();
+export const getEmpleado = async (req: Request, res: Response) => {
+    const empleados = await Empleado.find();
     res.json(empleados);
-}
+};
 
-empleadoController.addEmpleado=async(req,res)=>{
-    const empleado=new Empleado(req.body);
+export const addEmpleado = async (req: Request, res: Response) => {
+    const empleado = new Empleado(req.body);
     await empleado.save();
-    res.json({status:'Empleado guardado'});
-}
+    res.json({ status: 'Empleado guardado' });
+};
 
-empleadoController.updateEmpleado=async(req,res)=>{
-    const {id}=req.params;
-    const empleado=await Empleado.findByIdAndUpdate(id,req.body);
-    res.json({status:'Empleado actualizado'});
-}
-empleadoController.deleteEmpleado=async(req,res)=>{
-    const {id}=req.params;
-    await Empleado.findByIdAndRemove(id);
-    res.json({status:'Empleado eliminado'});
-}
-module.exports=empleadoController;
+export const updateEmpleado = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    await Empleado.findByIdAndUpdate(id, req.body);
+    res.json({ status: 'Empleado actualizado' });
+};
+
+export const deleteEmpleado = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    await Empleado.findByIdAndDelete(id);
+    res.json({ status: 'Empleado eliminado' });
+};

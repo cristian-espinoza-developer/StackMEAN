@@ -1,10 +1,11 @@
-const express= require('express'); 
-const router=express.Router(); 
-const empleado=require('../controllers/empleados.controllers'); 
+import { Router } from 'express';
+import * as empleado from '../controllers/empleados.controllers.js';
 
-router.get('/empleados',empleado.getEmpleado); 
-router.post('/empleados', empleado.addEmpleado); 
-router.put('/empleados', empleado.updateEmpleado); 
-router.delete('/empleados', empleado.deleteEmpleado); 
+const router = Router();
 
-module.exports=router;
+router.get('/empleados', empleado.getEmpleado);
+router.post('/empleados', empleado.addEmpleado);
+router.put('/empleados/:id', empleado.updateEmpleado);
+router.delete('/empleados/:id', empleado.deleteEmpleado);
+
+export default router;
