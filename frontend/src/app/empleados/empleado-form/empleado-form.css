@@ -1,0 +1,10 @@
+form { display: grid; gap: 1rem; }
+h2 { margin: 0; font-size: 1.25rem; }
+label { display: grid; gap: .35rem; font-weight: 600; font-size: .9rem; }
+input { font: inherit; font-weight: 400; padding: .55rem .7rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: inherit; }
+input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+input.invalid { border-color: var(--danger); }
+.msg { color: var(--danger); font-weight: 400; }
+.alert { background: var(--danger-bg); color: var(--danger); border-radius: 8px; padding: .7rem .9rem; font-size: .9rem; }
+.alert ul { margin: .4rem 0 0; padding-left: 1.2rem; }
+.actions { display: flex; justify-content: flex-end; gap: .6rem; margin-top: .25rem; }

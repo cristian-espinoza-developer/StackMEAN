@@ -1,0 +1,101 @@
+<section class="toolbar">
+  <input
+    type="search"
+    class="search"
+    placeholder="Buscar por nombre, cargo o departamento…"
+    [value]="filtro()"
+    (input)="onFiltro($event)"
+    aria-label="Buscar empleados"
+  />
+  <button class="btn" (click)="cargar()" [disabled]="cargando()">Actualizar</button>
+  <button class="btn primary" (click)="enFormulario.set(null)">+ Nuevo empleado</button>
+</section>
+
+@if (aviso(); as a) {
+  <div class="toast" role="status">{{ a }}</div>
+}
+
+@if (error(); as e) {
+  <div class="alert" role="alert">
+    <strong>{{ e.message }}</strong>
+    @if (e.details.length) {
+      <ul>
+        @for (d of e.details; track d.path) {
+          <li>{{ d.message }}</li>
+        }
+      </ul>
+    }
+  </div>
+}
+
+@if (cargando() && !empleados().length) {
+  <p class="empty">Cargando empleados…</p>
+} @else if (!visibles().length && !error()) {
+  <p class="empty">
+    {{ empleados().length ? 'Ningún empleado coincide con la búsqueda.' : 'Aún no hay empleados registrados.' }}
+  </p>
+} @else if (visibles().length) {
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Cargo</th>
+          <th>Departamento</th>
+          <th class="num">Sueldo</th>
+          <th>Actualizado</th>
+          <th class="acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (e of visibles(); track e.id) {
+          <tr>
+            <td data-label="Nombre">{{ e.nombre }}</td>
+            <td data-label="Cargo">{{ e.cargo }}</td>
+            <td data-label="Departamento"><span class="chip">{{ e.departamento }}</span></td>
+            <td data-label="Sueldo" class="num">{{ e.sueldo | currency }}</td>
+            <td data-label="Actualizado">{{ e.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+            <td class="acciones">
+              <button class="btn small" (click)="enFormulario.set(e)">Editar</button>
+              <button class="btn small danger" (click)="porEliminar.set(e)">Eliminar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">{{ visibles().length }} empleado(s)</td>
+          <td class="num">{{ totalSueldos() | currency }}</td>
+          <td colspan="2"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+}
+
+@if (enFormulario() !== undefined) {
+  <div class="backdrop" (click)="enFormulario.set(undefined)">
+    <div class="dialog" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+      <app-empleado-form
+        [empleado]="enFormulario() ?? null"
+        (guardado)="onGuardado($event)"
+        (cancelado)="enFormulario.set(undefined)"
+      />
+    </div>
+  </div>
+}
+
+@if (porEliminar(); as e) {
+  <div class="backdrop" (click)="porEliminar.set(null)">
+    <div class="dialog" role="alertdialog" aria-modal="true" (click)="$event.stopPropagation()">
+      <h2>Eliminar empleado</h2>
+      <p>¿Seguro que deseas eliminar a <strong>{{ e.nombre }}</strong>? Esta acción no se puede deshacer.</p>
+      <div class="dialog-actions">
+        <button class="btn" (click)="porEliminar.set(null)" [disabled]="eliminando()">Cancelar</button>
+        <button class="btn danger solid" (click)="confirmarEliminar()" [disabled]="eliminando()">
+          {{ eliminando() ? 'Eliminando…' : 'Eliminar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

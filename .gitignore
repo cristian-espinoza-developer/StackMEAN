@@ -11,6 +11,9 @@ dist/
 build/
 *.tsbuildinfo
 
+#Angular
+.angular/
+
 # Logs
 logs/
 *.log

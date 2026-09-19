@@ -1,0 +1,55 @@
+<form [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+  <h2>{{ editando() ? 'Editar empleado' : 'Nuevo empleado' }}</h2>
+
+  <label>
+    Nombre
+    <input formControlName="nombre" type="text" placeholder="Ana Torres" [class.invalid]="invalido('nombre')" />
+    @if (invalido('nombre')) {
+      <small class="msg">El nombre es obligatorio (máx. 100 caracteres).</small>
+    }
+  </label>
+
+  <label>
+    Cargo
+    <input formControlName="cargo" type="text" placeholder="Desarrolladora" [class.invalid]="invalido('cargo')" />
+    @if (invalido('cargo')) {
+      <small class="msg">El cargo es obligatorio (máx. 100 caracteres).</small>
+    }
+  </label>
+
+  <label>
+    Departamento
+    <input formControlName="departamento" type="text" placeholder="TI" [class.invalid]="invalido('departamento')" />
+    @if (invalido('departamento')) {
+      <small class="msg">El departamento es obligatorio (máx. 100 caracteres).</small>
+    }
+  </label>
+
+  <label>
+    Sueldo mensual
+    <input formControlName="sueldo" type="number" step="0.01" placeholder="1500" [class.invalid]="invalido('sueldo')" />
+    @if (invalido('sueldo')) {
+      <small class="msg">El sueldo debe ser un número mayor que 0.</small>
+    }
+  </label>
+
+  @if (error(); as e) {
+    <div class="alert" role="alert">
+      <strong>{{ e.message }}</strong>
+      @if (e.details.length) {
+        <ul>
+          @for (d of e.details; track d.path) {
+            <li>{{ d.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+  }
+
+  <div class="actions">
+    <button type="button" class="btn" (click)="cancelado.emit()" [disabled]="enviando()">Cancelar</button>
+    <button type="submit" class="btn primary" [disabled]="enviando()">
+      {{ enviando() ? 'Guardando…' : editando() ? 'Guardar cambios' : 'Crear empleado' }}
+    </button>
+  </div>
+</form>
