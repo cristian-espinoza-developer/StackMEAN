@@ -1,6 +1,7 @@
 import type { CreateEmployeeData, Employee, UpdateEmployeeData } from '../domain/employee.js';
 
 export interface IEmployeeRepository {
+  
   findAll(): Promise<Employee[]>;
 
   create(data: CreateEmployeeData): Promise<Employee>;

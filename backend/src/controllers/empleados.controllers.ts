@@ -6,10 +6,6 @@ import type { IEmployeeRepository } from '../repositories/IEmployeeRepository.js
 
 const EMPLEADO_NO_ENCONTRADO = 'Empleado no encontrado';
 
-/**
- * Los datos de entrada ya llegan validados por el middleware `validate`, y los
- * errores se propagan (Express 5 captura los rechazos async) al errorHandler.
- */
 export class EmpleadoController {
   constructor(private readonly repository: IEmployeeRepository) {}
 
