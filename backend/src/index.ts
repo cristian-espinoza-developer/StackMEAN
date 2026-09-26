@@ -15,6 +15,8 @@ const employeeRepository: IEmployeeRepository = new MongoEmployeeRepository(db);
 
 const app = express();
 const port = Number(process.env.PORT ?? 3000);
+// 0.0.0.0 para aceptar conexiones externas (p. ej. IP pública en EC2), no solo localhost.
+const host = process.env.HOST ?? '0.0.0.0';
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -24,6 +26,6 @@ app.use('/api/v1', createEmpleadosRouter(new EmpleadoController(employeeReposito
 app.use(notFoundHandler);
 app.use(errorHandler); // siempre al final
 
-app.listen(port, () => {
-  console.log('Servidor escuchando en el puerto ' + port);
+app.listen(port, host, () => {
+  console.log(`Servidor escuchando en http://${host}:${port}`);
 });
