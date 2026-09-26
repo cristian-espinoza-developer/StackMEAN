@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
-export const API_URL = 'http://localhost:3000/api/v1';
+export const API_URL = environment.apiUrl;
 
 export interface ErrorDetail {
   path: string;
